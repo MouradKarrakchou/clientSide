@@ -6,9 +6,8 @@ import java.rmi.registry.Registry;
 public class Main {
     public static void main(String[] args) throws RemoteException, NotBoundException {
         Registry reg = LocateRegistry.getRegistry("localhost",2001);
-        Distante d = (Distante)reg.lookup("MonOD");
-        Service service= (Service) d.getRMIRerence();
-        service.setValue(5);
-        System.out.println(service.getValue());
+        IConnection connection = (IConnection) reg.lookup("MonOD");
+        connection.signIn("blibla","blublu");
+        connection.login("blibla","blublu");
     }
 }
