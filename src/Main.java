@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws RemoteException, NotBoundException {
         Registry reg = LocateRegistry.getRegistry("localhost",2001);
         IConnection connection = (IConnection) reg.lookup("MonOD");
-        connection.signIn("blibla","blublu");
-        connection.login("blibla","blublu");
+        System.out.println(connection.signIn("blibla","blublu"));
+        //connection.login("blibla","blublu");
     }
 }
