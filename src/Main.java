@@ -8,6 +8,6 @@ public class Main {
         Registry reg = LocateRegistry.getRegistry("localhost",2001);
         IConnection connection = (IConnection) reg.lookup("MonOD");
         System.out.println(connection.signIn("blibla","blublu"));
-        //connection.login("blibla","blublu");
+        connection.login("blibla","blublu");
     }
 }
