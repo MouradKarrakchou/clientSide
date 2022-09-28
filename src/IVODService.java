@@ -1,6 +1,6 @@
 import java.util.List;
 
 public interface IVODService {
-    List<MovieDesc> viewCatalog();
-    Bill playmovie(String isbn, IClientBox box);
+    List<IMovieDesc> viewCatalog();
+    IBill playmovie(String isbn, IClientBox box);
 }
