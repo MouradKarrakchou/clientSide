@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class MovieDesc implements IMovieDesc, Serializable {
+public class MovieDesc implements  Serializable {
     String movieName;
     String isbn;
     String synopsis;
@@ -12,11 +12,11 @@ public class MovieDesc implements IMovieDesc, Serializable {
     }
 
     @Override
-    public String toPrint() {
+    public String toString() {
         return
-                "movieName='" + movieName + '\n' +
-                ", isbn='" + isbn + '\n' +
-                ", synopsis='" + synopsis + '\n';
+                "movieName='" + movieName + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", synopsis='" + synopsis + '\'';
     }
 
 }
