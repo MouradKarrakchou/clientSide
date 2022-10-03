@@ -1,9 +1,10 @@
 import java.util.List;
 
 public class Logger {
-    public static void showCatalogue(List<MovieDesc> allMovieDesc){
+    public static void showCatalogue(List<MovieDesc> allMovieDesc) throws InterruptedException {
         for (MovieDesc movieDesc:allMovieDesc){
             System.out.println(movieDesc.toString());
+            if (movieDesc instanceof MovieDescExtended) ((MovieDescExtended) movieDesc).streamTeaser();
         }
     }
 
