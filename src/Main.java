@@ -1,4 +1,6 @@
-import groovy.util.logging.Log;
+import exception.InvalidCredentialsException;
+import exception.InvalidISBN;
+import exception.SignInFailed;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -7,17 +9,12 @@ import java.rmi.registry.Registry;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException, InvalidCredentialsException, NotBoundException, SignInFailed, InterruptedException, InvalidISBN {
         Registry reg = null;
         IConnection connection = null;
-        try {
-            reg = LocateRegistry.getRegistry("localhost", 2001);
-            connection = (IConnection) reg.lookup("MonOD");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
+
+        reg = LocateRegistry.getRegistry("localhost", 2001);
+        connection = (IConnection) reg.lookup("MonOD");
 
         //connection.signIn("blibla","bliblu");
         //IVODService ivodService=connection.login("blibla","bliblu");
@@ -34,8 +31,8 @@ public class Main {
                 password = sc.nextLine();
                 try {
                     signInResult = connection.signIn(mail, password);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                } catch (SignInFailed e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -53,19 +50,15 @@ public class Main {
                 System.out.print("LogIn, écrire password:");
                 password = sc.nextLine();
                 ivodService = connection.login(mail, password);
-            } catch (Exception e) {
+            } catch (InvalidCredentialsException e) {
                 notLogin = true;
-                if (++count == maxTries) throw new RuntimeException(e);
+                if (++count == maxTries) throw e;
                 System.out.println("Nbr d'essaie restant: " + (maxTries - count));
             }
         }
         //
         ClientBox clientBox = null;
-        try {
-            clientBox = new ClientBox(10000);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        clientBox = new ClientBox(10000);
 
         //System.out.println(ivodService.playmovie(ivodService.viewCatalog().get(1).isbn,clientBox).movieName);
         //System.out.println(ivodService.playmovie(ivodService.viewCatalog().get(1).isbn,clientBox).outrageousPrice);
@@ -75,19 +68,17 @@ public class Main {
                 Logger.showCatalogue(ivodService.viewCatalog());
                 System.out.println("Veuillez entrer l'isbn du film que vous souhaitez regarder:");
                 String isbn = sc.nextLine();
-                Logger.showBill(ivodService.playmovie(isbn, clientBox));
+                Logger.showBill(ivodService.playMovie(isbn, clientBox));
                 Thread.sleep(100);
                 while (clientBox.movieIsPlaying) {
                     Thread.sleep(1000);
                 }
                 System.out.println("Merci d'avoir regarder notre film!");
                 Thread.sleep(3000);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (InvalidISBN e) {
+                System.out.println(e.getMessage());
+                Thread.sleep(2000);
             }
-
         }
 
     }

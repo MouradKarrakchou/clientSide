@@ -1,7 +1,9 @@
+import exception.InvalidISBN;
+
 import java.rmi.RemoteException;
 import java.util.List;
 
 public interface IVODService extends java.rmi.Remote {
     List<MovieDesc> viewCatalog() throws RemoteException;
-    Bill playmovie(String isbn, IClientBox box) throws RemoteException;
+    Bill playMovie(String isbn, IClientBox box) throws RemoteException, InvalidISBN;
 }
