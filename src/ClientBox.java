@@ -12,6 +12,9 @@ public class ClientBox extends UnicastRemoteObject implements IClientBox {
         this.movieIsPlaying = movieIsPlaying;
     }
 
+    /**
+     * Used to stream each frame of the movie
+     */
     @Override
     public void stream(byte[] chunck) throws RemoteException, InterruptedException {
             System.out.println(Arrays.toString(chunck));

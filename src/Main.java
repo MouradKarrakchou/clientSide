@@ -10,14 +10,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws RemoteException, InvalidCredentialsException, NotBoundException, SignInFailed, InterruptedException, InvalidISBN {
-        Registry reg = null;
-        IConnection connection = null;
+        Registry reg ;
+        IConnection connection;
 
         reg = LocateRegistry.getRegistry("localhost", 2001);
         connection = (IConnection) reg.lookup("MonOD");
 
-        //connection.signIn("blibla","bliblu");
-        //IVODService ivodService=connection.login("blibla","bliblu");
         Scanner sc = new Scanner(System.in);
         String mail, password;
         System.out.println("Pour sign in taper 0, Pour login taper 1");
@@ -57,7 +55,7 @@ public class Main {
             }
         }
         //
-        ClientBox clientBox = null;
+        ClientBox clientBox;
         clientBox = new ClientBox(10000);
 
         //System.out.println(ivodService.playmovie(ivodService.viewCatalog().get(1).isbn,clientBox).movieName);
@@ -74,6 +72,7 @@ public class Main {
                     Thread.sleep(1000);
                 }
                 System.out.println("Merci d'avoir regarder notre film!");
+                System.out.println("Vous allez être redirigé vers le catalogue!");
                 Thread.sleep(3000);
             } catch (InvalidISBN e) {
                 System.out.println(e.getMessage());

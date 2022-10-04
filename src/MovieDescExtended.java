@@ -9,6 +9,10 @@ public class MovieDescExtended extends MovieDesc implements Serializable {
         this.teaser=teaser;
     }
 
+    /**
+     * stream all the frame of the teaser
+     * @throws InterruptedException
+     */
     public void streamTeaser() throws InterruptedException {
         System.out.println("Voici un teaser pour ce film");
         for (byte[] bytes:teaser){
