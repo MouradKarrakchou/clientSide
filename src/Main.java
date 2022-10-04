@@ -18,28 +18,36 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         String mail, password;
+
+
+        //The user chooses if we want to sign in or login
         System.out.println("Pour sign in taper 0, Pour login taper 1");
         Boolean userWantsToSignIn = sc.nextLine().equals("0");
+
+
+        //User sign in if he choosed to(if he uses an email that is already used he is reasked to sign in):
         if (userWantsToSignIn) {
-            boolean signInResult = false;
-            while(!signInResult){
-                System.out.print("SignIn, écrire email:");
-                mail = sc.nextLine();
-                System.out.print("SignIn, écrire password:");
-                password = sc.nextLine();
-                try {
-                    signInResult = connection.signIn(mail, password);
-                } catch (SignInFailed e) {
-                    System.out.println(e.getMessage());
+                boolean signInResult = false;
+                while(!signInResult){
+                    System.out.print("SignIn, écrire email:");
+                    mail = sc.nextLine();
+                    System.out.print("SignIn, écrire password:");
+                    password = sc.nextLine();
+                    try {
+                        signInResult = connection.signIn(mail, password);
+                    } catch (SignInFailed e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
-            }
         }
 
-        //Login demande lors d'une exception
+
         int count = 0;
         int maxTries = 3;
         boolean notLogin = true;
         IVODService ivodService = null;
+
+        //The user has 3 try to login after that an error is thrown
         while (notLogin) {
             try {
                 notLogin = false;
@@ -58,8 +66,8 @@ public class Main {
         ClientBox clientBox;
         clientBox = new ClientBox(10000);
 
-        //System.out.println(ivodService.playmovie(ivodService.viewCatalog().get(1).isbn,clientBox).movieName);
-        //System.out.println(ivodService.playmovie(ivodService.viewCatalog().get(1).isbn,clientBox).outrageousPrice);
+        //The user see the catalogue and chooses a movie by it's isbn(if he chooses an invalid isbn he can choose again) .
+        //The movie is then streamed frame by frame. After that he can choose a new movie.
         while (true) {
             System.out.println("Voici notre catalogue:");
             try {
